@@ -6,7 +6,7 @@ var uglify = require('gulp-uglify')
 var utilities = require('gulp-util')
 var buildProduction = utilities.env.production
 var del = require('del')
-var eslint = require('gulp-eslint')
+var jshint = require('gulp-jshint')
 var concat = require('gulp-concat')
 var lib = require('bower-files') ({
   "overrides": {
@@ -22,10 +22,10 @@ var browserify = require('browserify')
 var sass = require('gulp-sass')
 var sourcemaps = require('gulp-sourcemaps')
 
-gulp.task('eslint', function() {
+gulp.task('jshint', function() {
   return gulp.src(['js/*.js'])
-  .pipe(eslint())
-  .pipe(eslint.format())
+  .pipe(jshint())
+  .pipe(jshint.reporter('default'));
 })
 
 gulp.task('concatInterface', function() {
@@ -83,14 +83,14 @@ gulp.task('serve', ['build'], function() {
       index: 'index.html'
     }
   })
-
+//POW
   gulp.watch(['js/*.js'], ['jsBuild'])
   gulp.watch(['bower.json'], ['bowerBuild'])
   gulp.watch(['*.html'], ['htmlBuild'])
   gulp.watch(["scss/*.scss"], ['cssBuild'])
 })
 
-gulp.task('jsBuild', ['jsBrowserify', 'eslint'], function() {
+gulp.task('jsBuild', ['jsBrowserify', 'jshint'], function() {
   browserSync.reload()
 })
 
