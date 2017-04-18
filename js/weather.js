@@ -17,9 +17,9 @@ Weather.prototype.getForecast = function(city, displayMinTempList, displayMaxTem
   $.get('http://api.openweathermap.org/data/2.5/forecast?q=' + city+',us&units=imperial' +'&appid=' + apiKey).then(function(response) {
     for (var i = 0; i < response.list.length; i++) {
       // displayHumidityList(city, response.list.main.humidity)
-      displayMinTempList(city, response.list[i].main.temp_min)
-      displayMaxTempList(city, response.list[i].main.temp_max)
-      displayWindList(city, getWindDirection(response.list[i].wind.deg), response.list[i].wind.speed)
+      displayMinTempList(city, response.list[i].main.temp_min, response.list[i].dt_txt)
+      displayMaxTempList(city, response.list[i].main.temp_max, response.list[i].dt_txt)
+      displayWindList(city, getWindDirection(response.list[i].wind.deg), response.list[i].wind.speed, response.list[i].dt_txt)
     }
   }).fail(function(error) {
     $('.showWeather').text('ERRAR')
@@ -28,7 +28,7 @@ Weather.prototype.getForecast = function(city, displayMinTempList, displayMaxTem
 
 const getWindDirection = function(windDeg) {
   let windRose = ''
-  if (windDeg >= 341 || windDeg <= 20) {
+  if (windDeg > 340 || windDeg <= 20) {
     windRose = 'N'
   } else if (windDeg > 20 && windDeg <= 65) {
     windRose = 'NE'

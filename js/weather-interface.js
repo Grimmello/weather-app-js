@@ -12,20 +12,16 @@ const displayWind = function(city, windDirectionData, windSpeedData) {
   $('#showWind').text('Da wind in '+ city +' is blowing '+ windDirectionData + ' at '+ windSpeedData +' MPH')
 }
 
-// const displayHumidityList = function(city, displayHumidityList) {
-//   $('#showHumidityList').text('Da humidity for da week in ' + city + ' is ' + displayHumidityList)
-// }
-
-const displayMinTempList = function(city, displayMinTempList) {
-  $('#showMinTemperature').append('Da min temperature for da week in ' + city + ' is ' + displayMinTempList+' dagreez<br>')
+const displayMinTempList = function(city, displayMinTempList, date) {
+  $('#showMinTemperature').append('<div class="col-sm-1">Da min temperature for da week in ' + city + ' is <strong>' + displayMinTempList+'</strong> dagreez @ '+date+'</div>')
 }
 
-const displayMaxTempList = function(city, displayMaxTempList) {
-  $('#showMaxTemperature').append('Da makxz temperature for da week in ' + city + ' is ' + displayMaxTempList+' duhbreeze<br>')
+const displayMaxTempList = function(city, displayMaxTempList, date) {
+  $('#showMaxTemperature').append('<div class="col-sm-1">Da makxz temperature for da week in ' + city + ' is ' + displayMaxTempList+' duhbreeze @ '+date+'</div>')
 }
 
-const displayWindList = function(city, displayWindList) {
-  $('#showWindList').append('Da weeind for da week in ' + city + ' is ' + displayWindList+' die-rectum<br>')
+const displayWindList = function(city, displayWindList, displayWindSpeed, date) {
+  $('#showWindList').append('<div class="col-sm-1">Da weeind for da week in ' + city + ' is ' + displayWindList+' die-rectum @'+displayWindSpeed+' MPH '+date+'</div>')
 }
 
 $(document).ready(function() {
