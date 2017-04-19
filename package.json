@@ -1,7 +1,6 @@
 {
   "name": "weather-js",
   "version": "1.0.0",
-  "description": "",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,5 +23,15 @@
     "gulp-util": "^3.0.8",
     "jshint": "^2.9.4",
     "vinyl-source-stream": "^1.1.0"
-  }
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grimmello/weather-app-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Grimmello/weather-app-js/issues"
+  },
+  "homepage": "https://github.com/Grimmello/weather-app-js#readme",
+  "description": ""
 }

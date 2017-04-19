@@ -5,17 +5,29 @@
   <script src="build/js/vendor.min.js"></script>
   <script type="text/javascript" src="build/js/app.js"></script>
   <title>Da Weadar</title>
+  <style>
+     #map {
+      height: 400px;
+      width: 100%;
+     }
+  </style>
 </head>
-<body>
+<body onload="initMap()">
   <div class="container">
-    <h1>GET DA WEADAR FOR UR FACE</h1>
-    <label for="location">WHARE ARE U:</label>
-    <input id="location" type="text">
+    <h1>GET DA WEADAR</h1>
+    <label for="address">WHARE ARE U:</label>
+    <input id="address" type="text">
     <button class="btn-success" id="weather-location">get weadar!</button>
     <br><span id="showHumidity"></span>
     <br><span id="showTemperature"></span>
     <br><span id="showWind"></span>
     <br><div class="showWeather"></div>
+    <div id="map"></div>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGFLJDSbT_dw3FiWw2dpLBAyDeVtYEVXU&callback=initMap">
+    </script>
+
     <h1>MAKE wEAther 4cast</h1>
     <br><span id="showHumidityList"></span>
     <br><span id="showMinTemperature"></span>
@@ -23,5 +35,35 @@
     <br><span id="showWindList"></span>
     <br><div class="showWeather"></div>
   </div>
+  <script>
+    var geocoder;
+    var map;
+    function initMap() {
+      geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(45.520752, -122.677693);
+      var mapOptions = {
+        zoom: 8,
+        center: latlng
+      }
+      document.getElementById('weather-location').addEventListener('click', function() {
+        geocodeAddress(geocoder, map);
+      })
+      map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    }
+    function geocodeAddress(geocoder, resultsMap) {
+          var address = document.getElementById('address').value;
+          geocoder.geocode({'address': address}, function(results, status) {
+            if (status === 'OK') {
+              resultsMap.setCenter(results[0].geometry.location);
+              var marker = new google.maps.Marker({
+                map: resultsMap,
+                position: results[0].geometry.location
+              });
+            } else {
+              alert('Geocode was not successful for the following reason: ' + status);
+            }
+          })
+        }
+  </script>
 </body>
 </html>
