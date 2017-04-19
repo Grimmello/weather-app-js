@@ -1,4 +1,10 @@
 const Weather = require('./../js/weather.js').weatherModule
+var minTemps = require('./../js/weather.js').minTemps
+var maxTemps = require('./../js/weather.js').maxTemps
+var windSpeeds = require('./../js/weather.js').windSpeeds
+var timeArray = require('./../js/weather.js').timeArray
+var content
+var myChart
 
 const displayHumidity = function(city, humidityData) {
   $('#showHumidity').text('Da humidity in ' + city + ' is ' + humidityData + '%')
@@ -12,24 +18,53 @@ const displayWind = function(city, windDirectionData, windSpeedData) {
   $('#showWind').text('Da wind in '+ city +' is blowing '+ windDirectionData + ' at '+ windSpeedData +' MPH')
 }
 
-const displayMinTempList = function(city, displayMinTempList, date) {
-  $('#showMinTemperature').append('<div class="col-sm-1">Da min temperature for da week in ' + city + ' is <strong>' + displayMinTempList+'</strong> dagreez @ '+date+'</div>')
+
+function reload(){
+    let container = document.getElementById("container");
+    content = container.innerHTML;
+    container.innerHTML= content;
 }
 
-const displayMaxTempList = function(city, displayMaxTempList, date) {
-  $('#showMaxTemperature').append('<div class="col-sm-1">Da makxz temperature for da week in ' + city + ' is ' + displayMaxTempList+' duhbreeze @ '+date+'</div>')
+function container(min, max) {
+  myChart = Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Max and Min Temps'
+        },
+        xAxis: {
+            categories: ["Day 1","Day 2","Day 3","Day 4","Day 5","Day 6","Day 7"]
+        },
+        yAxis: {
+            title: {
+                text: 'Temp °F'
+            }
+        },
+        series: [{
+            name: 'Min temp °F',
+            data: min
+        }, {
+            name: 'Max temp °F',
+            data: max
+        }]
+    })
 }
 
-const displayWindList = function(city, displayWindList, displayWindSpeed, date) {
-  $('#showWindList').append('<div class="col-sm-1">Da weeind for da week in ' + city + ' is ' + displayWindList+' die-rectum @'+displayWindSpeed+' MPH '+date+'</div>')
+function time() {
+  setTimeout(function(){container(minTemps, maxTemps)},500)
 }
 
 $(document).ready(function() {
   let currentWeatherObject = new Weather()
   $('#weather-location').click(function() {
-    let city = $('#location').val()
+    let city = $('#address').val()
     $('#location').val('')
     currentWeatherObject.getWeather(city, displayTemperature, displayHumidity, displayWind)
-    currentWeatherObject.getForecast(city, displayMinTempList, displayMaxTempList, displayWindList)
+    currentWeatherObject.getForecast(city)
+
+    console.log(minTemps)
+    console.log(maxTemps)
+    time()
   })
 })

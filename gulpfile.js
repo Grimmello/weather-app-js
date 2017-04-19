@@ -8,6 +8,7 @@ var buildProduction = utilities.env.production
 var del = require('del')
 var jshint = require('gulp-jshint')
 var concat = require('gulp-concat')
+var Highcharts = require('highcharts');
 var lib = require('bower-files') ({
   "overrides": {
     "bootstrap": {

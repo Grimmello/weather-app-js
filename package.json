@@ -24,7 +24,9 @@
     "jshint": "^2.9.4",
     "vinyl-source-stream": "^1.1.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "highcharts": "^5.0.10"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Grimmello/weather-app-js.git"

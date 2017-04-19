@@ -4,7 +4,8 @@
   <link rel="stylesheet" href="build/css/vendor.css">
   <script src="build/js/vendor.min.js"></script>
   <script type="text/javascript" src="build/js/app.js"></script>
-  <title>Da Weadar</title>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <title>Weather</title>
   <style>
      #map {
       height: 400px;
@@ -12,16 +13,16 @@
      }
   </style>
 </head>
-<body onload="initMap()">
+<body onload="initMap()" style="background-color: lightgray;">
   <div class="container">
-    <h1>GET DA WEADAR</h1>
+    <h1>Weather App</h1>
     <label for="address">WHARE ARE U:</label>
     <input id="address" type="text">
-    <button class="btn-success" id="weather-location">get weadar!</button>
+    <button class="btn-success" id="weather-location">get weadar!</button><br>
     <br><span id="showHumidity"></span>
     <br><span id="showTemperature"></span>
     <br><span id="showWind"></span>
-    <br><div class="showWeather"></div>
+    <br><div class="showWeather"></div><hr>
     <div id="map"></div>
 
     <script async defer
@@ -29,11 +30,7 @@
     </script>
 
     <h1>MAKE wEAther 4cast</h1>
-    <br><span id="showHumidityList"></span>
-    <br><span id="showMinTemperature"></span>
-    <br><span id="showMaxTemperature"></span>
-    <br><span id="showWindList"></span>
-    <br><div class="showWeather"></div>
+    <div id="container" style="width:100%; height:400px;"></div>
   </div>
   <script>
     var geocoder;

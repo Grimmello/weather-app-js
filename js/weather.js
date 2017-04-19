@@ -1,25 +1,33 @@
 const apiKey = require('./../.env').apiKey
-
+var minTemps = []
+var maxTemps = []
+var windSpeeds = []
+var timeArray = []
 Weather = function(){
 }
 
 Weather.prototype.getWeather = function(city, displayTemperature, displayHumidity, displayWind) {
-  $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city+'&units=imperial' +'&appid=' + apiKey).then(function(response) {
+  $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city+'&units=imperial&appid=' + apiKey).then(function(response) {
     displayHumidity(city, response.main.humidity)
     displayTemperature(city, response.main.temp)
-    displayWind(city, getWindDirection(response.wind.deg), response.wind.speed)
+    var windDirect = getWindDirection(response.wind.deg)
+    console.log(response.wind.deg)
+    console.log(windDirect)
+    displayWind(city, windDirect, response.wind.speed)
   }).fail(function(error) {
     $('.showWeather').text('ERRAR')
   })
 }
 
-Weather.prototype.getForecast = function(city, displayMinTempList, displayMaxTempList, displayWindList) {
-  $.get('http://api.openweathermap.org/data/2.5/forecast?q=' + city+',us&units=imperial' +'&appid=' + apiKey).then(function(response) {
+Weather.prototype.getForecast = function(city) {
+  minTemps.length = 0
+  maxTemps.length = 0
+  $.get('http://api.openweathermap.org/data/2.5/forecast/daily?q=' + city+',us&units=imperial&cnt=7&appid=' + apiKey).then(function(response) {
     for (var i = 0; i < response.list.length; i++) {
-      // displayHumidityList(city, response.list.main.humidity)
-      displayMinTempList(city, response.list[i].main.temp_min, response.list[i].dt_txt)
-      displayMaxTempList(city, response.list[i].main.temp_max, response.list[i].dt_txt)
-      displayWindList(city, getWindDirection(response.list[i].wind.deg), response.list[i].wind.speed, response.list[i].dt_txt)
+      var min = parseFloat(response.list[i].temp.min)
+      minTemps.push(min)
+      var max = parseFloat(response.list[i].temp.max)
+      maxTemps.push(max)
     }
   }).fail(function(error) {
     $('.showWeather').text('ERRAR')
@@ -45,9 +53,13 @@ const getWindDirection = function(windDeg) {
   } else if (windDeg > 290 && windDeg <= 340) {
     windRose = 'NW'
   } else {
-    windRose = `WHAT YUO DOU you put ${windDeg}`
+    windRose = `${windDeg}`
   }
   return windRose
 }
 
 exports.weatherModule = Weather
+exports.minTemps = minTemps
+exports.maxTemps = maxTemps
+exports.windSpeeds = windSpeeds
+exports.timeArray = timeArray
